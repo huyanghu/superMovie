@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/list_bg_shap"
+    android:id="@+id/bottome_sheet"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/down_rv_list"
+        app:behavior_hideable="true"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:focusable="true"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dp_60" />
+</android.support.v4.widget.NestedScrollView>

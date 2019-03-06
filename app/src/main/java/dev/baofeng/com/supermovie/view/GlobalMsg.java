@@ -2,6 +2,8 @@ package dev.baofeng.com.supermovie.view;
 
 import java.util.Queue;
 
+import dev.baofeng.com.supermovie.R;
+
 
 /**
  * Created by huangyong on 2018/1/29.
@@ -23,9 +25,17 @@ public class GlobalMsg {
     public static final String KEY_MOVIE_DOWN_ITEM_TITLE = "KEY_MOVIE_DOWN_ITEM_TITLE";
     public static final String KEY_PLAY_URL = "KEY_PLAY_URL";
     public static final String KEY_PLAY_TITLE = "KEY_PLAY_TITLE";
+    public static final String KEY_MV_ID = "KEY_MV_ID";
+    public static final String KEY_MOVIE_TYPE = "KEY_MOVIE_TYPE";
+    public static final String KEY_MV_TYPE = "KEY_MOVIE_TYPE";
+    public static final String KEY_IS_MOVIE = "KEY_IS_MOVIE";
+    public static final int MOVIE = 0;
+    public static final String KEY_BLUR_COLOR = "KEY_BLUR_COLOR";
+
     public static boolean ISSHOW = false;
 
 
     public static String ACTION = "ACTION";
     public static String ACTIONWAIT = "WAITE";
+
 }

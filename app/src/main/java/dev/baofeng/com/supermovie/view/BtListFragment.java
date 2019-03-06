@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mingle.widget.LoadingView;
 import com.xiaosu.pulllayout.SimplePullLayout;
 import com.xiaosu.pulllayout.base.BasePullLayout;
 
@@ -25,6 +26,8 @@ import dev.baofeng.com.supermovie.adapter.BTcategoryAdapter;
 import dev.baofeng.com.supermovie.domain.RecentUpdate;
 import dev.baofeng.com.supermovie.presenter.CenterPresenter;
 import dev.baofeng.com.supermovie.presenter.iview.IAllView;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreAdapter;
+import dev.baofeng.com.supermovie.view.loadmore.LoadMoreWrapper;
 
 /**
  * Created by huangyong on 2018/1/31.
@@ -39,7 +42,8 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     TextView empImg;
     @BindView(R.id.empty_view)
     FrameLayout empFram;
-
+    @BindView(R.id.loadView)
+    LoadingView loadingView;
     private CenterPresenter recpresenter;
     BTcategoryAdapter adapter;
     private static BtListFragment btlistFragment;
@@ -73,6 +77,12 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingView.setLoadingText("正在加载，请稍后……");
+    }
     private void initView() {
         pulllayout.setOnPullListener(this);
         Bundle bundle = getArguments();
@@ -103,11 +113,25 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
     @Override
     public void loadSuccess(RecentUpdate movieBean) {
         this.movieInfo = movieBean;
+        loadingView.setVisibility(View.GONE);
         Log.e("movieInfo",movieBean.getData().size()+"");
         adapter =new BTcategoryAdapter(getContext(),movieBean);
         rvlist.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvlist.setAdapter(adapter);
-
+        LoadMoreWrapper.with(adapter)
+                .setLoadMoreEnabled(true)
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        rvlist.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                recpresenter.getLibraryMoreDdata(type, ++index, 18);
+                            }
+                        }, 1);
+                    }
+                })
+                .into(rvlist);
         if (empFram.isShown()){
             empFram.setVisibility(View.GONE);
         }
@@ -155,4 +179,5 @@ public class BtListFragment extends Fragment implements IAllView, BasePullLayout
         },2000);
 
     }
+
 }

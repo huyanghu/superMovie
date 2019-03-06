@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="110dp"
-    android:paddingTop="10dp"
-    android:fitsSystemWindows="true"
+    android:paddingBottom="30dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,4 +35,11 @@
             android:layout_height="0dp">
         </android.support.v7.widget.RecyclerView>
     </com.xiaosu.pulllayout.SimplePullLayout>
+
+    <com.mingle.widget.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="gone"
+        android:layout_width="200pt"
+        android:layout_gravity="center"
+        android:layout_height="200pt" />
 </RelativeLayout>

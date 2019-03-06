@@ -1,19 +1,26 @@
 package dev.baofeng.com.supermovie.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.antiless.support.widget.TabLayout;
+import com.huangyong.downloadlib.DownLoadMainActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dev.baofeng.com.supermovie.MainActivity;
 import dev.baofeng.com.supermovie.R;
 import dev.baofeng.com.supermovie.adapter.PageAdapter;
 
@@ -31,6 +38,13 @@ public class BTFragment extends Fragment {
     View tabline;
     @BindView(R.id.btvp)
     ViewPager btvp;
+
+    @BindView(R.id.toobar)
+    Toolbar toobar;
+    @BindView(R.id.square)
+    ImageView square;
+    @BindView(R.id.downtask)
+    ImageView downtask;
     private static BTFragment btFragment;
 
     @Nullable
@@ -61,17 +75,33 @@ public class BTFragment extends Fragment {
      * '首页', '最新电影', '经典高清', '国配电影', '经典港片', '国剧', '日韩剧', '美剧', '综艺', '动漫', '纪录片', '720P+1080P', '4K高清区', '3D电影']
      */
     private void initView() {
-        String[] arr = { "最新电影","经典高清","国配电影",
+
+
+        toobar.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            getContext().startActivity(intent);
+        });
+        downtask.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), DownLoadMainActivity.class);
+            startActivity(intent);
+        });
+
+        String[] arr = {"首页", "最新电影", "经典高清", "国配电影",
                 "经典港片","国产剧","日韩剧",
                 "美剧","综艺","动漫",
                 "纪录片","4K高清区"};
-        String[] type = {"latest","highdpi","cznmv",
+        String[] type = {"home", "latest", "highdpi", "cznmv",
                 "hungkong","native","koria",
                 "america","complex","curtoon",
                 "document","k4mv"};
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
-            list.add(BtListFragment.newInstance(type[i]));
+            if (i == 0) {
+                list.add(HomeFragment.getInstance());
+            } else {
+                list.add(BtListFragment.newInstance(type[i]));
+            }
+
             tabTitle.addTab(tabTitle.newTab().setText(arr[i]));
         }
         PageAdapter adapter = new PageAdapter(getChildFragmentManager(),list,arr);
@@ -93,4 +123,10 @@ public class BTFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }
